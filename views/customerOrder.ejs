@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>customer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <!-- <h1 class="text-center my-5"> Your Order</h1> -->
+    <!-- <div class="container my-5 text-right">
+        <!-- <a href="/status"><button type="button" class="btn btn-outline-info mx-3">
+            Order Status
+        </button></a> -->
+    <!-- <a href="/"><button type="button" class="btn btn-outline-success">
+                Back to Dashboard
+            </button>
+        </a>
+    </div> -->
+
+
+
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+
+    <div class="container">
+
+        <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">Confirm Order</div>
+                    <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink"
+                            href="/customer">Back to Product page</a></div>
+                </div>
+                <div class="panel-body">
+                    <form method="POST" action="/customer/order/<%=product._id%>">
+                        <input type='hidden' name='csrfmiddlewaretoken' value='XFe2rTYl9WOpV8U6X5CfbIuOZOELJ97S' />
+
+
+                        <form class="form-horizontal" method="POST" action="/customer/order/<%=product._id%>">
+                            <input type='hidden' name='csrfmiddlewaretoken' value='XFe2rTYl9WOpV8U6X5CfbIuOZOELJ97S' />
+
+                            <div id="div_id_email" class="form-group">
+                                <label for="id_email" class="control-label col-md-4">Customer
+                                    Address<span class="asteriskField">*</span></label>
+                                <div class="controls col-md-8 ">
+                                    <input class="input-md emailinput form-control" id="id_email"
+                                        name="address" placeholder="eg. 14, Indira Nagar"
+                                        style="margin-bottom: 10px" type="text" required/>
+                                </div>
+                            </div>
+                            <div id="div_id_password1" class="form-group">
+                                <label for="id_password1" class="control-label col-md-4  requiredField">Contact No<span
+                                        class="asteriskField">*</span>
+                                </label>
+                                <div class="controls col-md-8 ">
+                                    <input class="input-md textinput textInput form-control" id="id_password1"
+                                        name="number" placeholder="eg. 7439840298" style="margin-bottom: 10px"
+                                        type="text" required/>
+                                </div>
+                                <div id="div_id_name" class="form-group">
+                                    <label for="id_name" class="control-label col-md-4  requiredField">Customer
+                                        Name</label>
+                                    <div class="controls col-md-8 ">
+                                        <div class="input-md textinput textInput form-control" id="id_name" name="name"
+                                            placeholder="" value="<%= user.name %>" style="margin-bottom: 10px"
+                                            type="text" />
+                                        <%= user.name %>
+                                    </div>
+                                </div>
+                                <div id="div_id_name" class="form-group">
+                                    <label for="id_name" class="control-label col-md-4  requiredField">Product</label>
+                                    <div class="controls col-md-8 ">
+                                        <div class="input-md textinput textInput form-control" id="id_name" name="title"
+                                            placeholder="" value="<%= product.title %>" style="margin-bottom: 10px"
+                                            type="text" />
+                                        <%= product.title %>
+                                    </div>
+                                </div>
+                                <!-- <div id="div_id_gender" class="form-group">
+                                <label for="id_gender" class="control-label col-md-4  requiredField"> Gender<span
+                                        class="asteriskField">*</span> </label>
+                                <div class="controls col-md-8 " style="margin-bottom: 10px">
+                                    <label class="radio-inline"> <input type="radio" name="gender" id="id_gender_1"
+                                            value="M" style="margin-bottom: 10px">Male</label>
+                                    <label class="radio-inline"> <input type="radio" name="gender" id="id_gender_2"
+                                            value="F" style="margin-bottom: 10px">Female </label>
+                                </div>
+                            </div> -->
+                                <div id="div_id_name" class="form-group">
+                                    <label for="id_name" class="control-label col-md-4">Price</label>
+                                    <div class="controls col-md-8 ">
+                                        <div class="input-md textinput textInput form-control" id="id_name" name="price"
+                                            placeholder="" value="<%= product.price %>" style="margin-bottom: 10px"
+                                            type="text" />
+                                        <%= product.price %>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                <div class="controls col-md-offset-4 col-md-8 ">
+                                    <div id="div_id_terms" class="checkbox required">
+                                        <label for="id_terms" class=" requiredField">
+                                            <input class="input-ms checkboxinput" id="id_terms" name="terms"
+                                                style="margin-bottom: 10px" type="checkbox" />
+                                            Agree with the terms and conditions
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div> -->
+                                <div class="form-group">
+                                    <div class="aab controls col-md-4 "></div>
+                                    <div class="controls col-md-8 my-4">
+                                        <button class="btn btn-success">Place Order</button>
+                                    </div>
+                                </div>
+
+                        </form>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
