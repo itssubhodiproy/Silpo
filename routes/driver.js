@@ -6,7 +6,7 @@ const Product = require('../model/products')
 const Order = require('../model/orders')
 const Users = require('../model/users')
 
-//giving admin all the listed product
+//giving driver current order if have it
 route.get('/', checkAuthenticated, authRole(ROLE.DRIVER), async (req, res) => {
     try {
         const orderlen = req.user.orders.length
@@ -29,13 +29,12 @@ route.post('/updateStatus', checkAuthenticated, authRole(ROLE.DRIVER), async (re
             order_status: req.body.status
         })
         const order = await Order.findById(id);
-
+        //if order is delivered, driver is free
         if (order.order_status === 'delivered') {
             const userid = req.user._id
             await Users.findByIdAndUpdate(userid, {
                 status: "free"
             })
-            return res.redirect('/driver')
         }
         res.redirect('/driver')
     } catch (error) {
@@ -45,13 +44,15 @@ route.post('/updateStatus', checkAuthenticated, authRole(ROLE.DRIVER), async (re
 
 //driver history
 
-route.get('/history', checkAuthenticated, authRole(ROLE.DRIVER), async(req, res) => {
+route.get('/history', checkAuthenticated, authRole(ROLE.DRIVER), async (req, res) => {
     try {
         const history = req.user.orders
         const temp = [];
         for (var i = 0; i < history.length; i++) {
             const order = await Order.findById(history[i]);
-            temp.push(order)
+            if (order !== null) {
+                temp.push(order)
+            }
         }
         res.render('driverHistory', { orders: temp })
     } catch (error) {

@@ -1,5 +1,4 @@
-
-//Admin has all the permissions to access all the data
+//No one can acess the data other than themselves
 function authRole(role) {
   return (req, res, next) => {
     if (req.user.role !== role) {
@@ -9,14 +8,13 @@ function authRole(role) {
     next()
   }
 }
-
+//check for authentication
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
       return next()
   }
   res.redirect('/login')
 }
-
 function checkNotAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
       return res.redirect('/')

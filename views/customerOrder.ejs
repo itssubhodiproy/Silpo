@@ -11,34 +11,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-
-<body>
-    <!-- <h1 class="text-center my-5"> Your Order</h1> -->
-    <!-- <div class="container my-5 text-right">
-        <!-- <a href="/status"><button type="button" class="btn btn-outline-info mx-3">
-            Order Status
-        </button></a> -->
-    <!-- <a href="/"><button type="button" class="btn btn-outline-success">
-                Back to Dashboard
-            </button>
-        </a>
-    </div> -->
-
-
-
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
+</head>
+
+<body>
+
+
 
     <div class="container">
-
         <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <div class="panel-title">Confirm Order</div>
+                    <div class="panel-title">Confirm yourn Order</div>
                     <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink"
                             href="/customer">Back to Product page</a></div>
                 </div>
@@ -49,14 +37,16 @@
 
                         <form class="form-horizontal" method="POST" action="/customer/order/<%=product._id%>">
                             <input type='hidden' name='csrfmiddlewaretoken' value='XFe2rTYl9WOpV8U6X5CfbIuOZOELJ97S' />
+                            
+                            <input type="hidden" name="productid" value="<%=product._id%>">
 
                             <div id="div_id_email" class="form-group">
                                 <label for="id_email" class="control-label col-md-4">Customer
                                     Address<span class="asteriskField">*</span></label>
                                 <div class="controls col-md-8 ">
-                                    <input class="input-md emailinput form-control" id="id_email"
-                                        name="address" placeholder="eg. 14, Indira Nagar"
-                                        style="margin-bottom: 10px" type="text" required/>
+                                    <input class="input-md emailinput form-control" id="id_email" name="address"
+                                        placeholder="eg. 14, Indira Nagar" style="margin-bottom: 10px" type="text"
+                                        required />
                                 </div>
                             </div>
                             <div id="div_id_password1" class="form-group">
@@ -66,7 +56,7 @@
                                 <div class="controls col-md-8 ">
                                     <input class="input-md textinput textInput form-control" id="id_password1"
                                         name="number" placeholder="eg. 7439840298" style="margin-bottom: 10px"
-                                        type="text" required/>
+                                        type="text" required />
                                 </div>
                                 <div id="div_id_name" class="form-group">
                                     <label for="id_name" class="control-label col-md-4  requiredField">Customer

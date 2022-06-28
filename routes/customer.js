@@ -14,14 +14,12 @@ route.get('/', checkAuthenticated, authRole(ROLE.CUSTOMER), async (req, res) => 
     } catch (error) {
         res.send("you're facing error")
     }
-
-    // console.log(req.user.name)
 })
-/// render order form with product data and post orderForm with merged data
+/// render order form with individual product
 route.get('/order/:id', checkAuthenticated, authRole(ROLE.CUSTOMER), async (req, res) => {
     try {
-        const id = req.params.id
-        const product = await Product.findById(id)
+        const productid = req.params.id
+        const product = await Product.findById(productid)
         const user = req.user
         res.render('customerOrder.ejs', { product: product, user: user })
     } catch (error) {
@@ -31,27 +29,28 @@ route.get('/order/:id', checkAuthenticated, authRole(ROLE.CUSTOMER), async (req,
 })
 //customer is placing order
 route.post('/order/:id', checkAuthenticated, authRole(ROLE.CUSTOMER), async (req, res) => {
-    const id = req.params.id
-    //fetch data about customer
+    const productid = req.params.id
+    const customer_id = req.user._id
     try {
-        const product = await Product.findById(id)
+        const product = await Product.findById(productid)
         await Order.create({
             customer_name: req.user.name,
             customer_address: req.body.address,
             contact_number: req.body.number,
             product_name: product.title,
-            product_price: product.price
+            product_price: product.price,
+            customer_id: customer_id
         })
-        // console.log(product)
         res.redirect('/customer/status')
     } catch (error) {
         res.status(400).send("You're facing error")
     }
 })
-//your orders
+//your all current and past orders
 route.get('/status', checkAuthenticated, authRole(ROLE.CUSTOMER), async (req, res) => {
+    const id = req.user._id
     try {
-        const allOrders = await Order.find({ customer_name: req.user.name })
+        const allOrders = await Order.find({ customer_id: id })
         res.render("customerStatus.ejs", { orders: allOrders })
     } catch (error) {
         res.send("you're facing error")
