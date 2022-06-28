@@ -15,12 +15,19 @@
 </head>
 
 <body>
-    <h1 class="text-center my-5"> Pending Orders</h1>
+    <h1 class="text-center my-5"> All past orders(handled by you)</h1>
     <div class="container my-3 text-right">
 
         <div class="btn-group" role="group" aria-label="Third group">
-            <a href="driver/history"><button type="button" class="btn btn-outline-info mx-3">
-                    History
+            <a href="/admin/status"><button type="button" class="btn btn-outline-info">
+                    Manage orders
+                </button>
+            </a>
+        </div>
+
+        <div class="btn-group" role="group" aria-label="Third group">
+            <a href="/admin"><button type="button" class="btn btn-outline-info">
+                    Product page
                 </button>
             </a>
         </div>
@@ -36,52 +43,45 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Phone No.</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Customer Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Product</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">admin name</th>
                     <th scope="col">status</th>
-                    <th scope="col">update status</th>
-                    <th scope="col">update</th>
                     <!-- <th scope="col">To Update</th> -->
 
                 </tr>
             </thead>
             <% if(orders!==null) {%>
                 <tbody>
-
-                    <form action="/driver/updateStatus" method="POST">
+                    <% for(var i=orders.length-1;i>=0;i--) {%>
                         <tr>
                             <th scope="row">
-                                <%=orders.customer_name%>
+                                <%=i+1%>
                             </th>
                             <td>
-                                <%=orders.contact_number%>
+                                <%=orders[i].customer_name%>
                             </td>
                             <td>
-                                <%=orders.customer_address%>
+                                <%=orders[i].customer_address%>
                             </td>
                             <td>
-                                <%=orders.product_name%>
+                                <%=orders[i].product_name%>
                             </td>
                             <td>
-                                <%=orders.order_status%>
+                                <%=orders[i].order_time%>
                             </td>
                             <td>
-                                <select name="status">
-                                    <option value="dispatched">dispatched</option>
-                                    <option value="picked">picked</option>
-                                    <option value="on the way">on the way</option>
-                                    <option value="delivered">delivered</option>
-                                </select>
+                                <%=orders[i].admin%>
                             </td>
-                            <input type="hidden" name="orderid" value="<%= orders._id %>" />
                             <td>
-                                <button class="btn btn-primary btn-sm" type="submit">Update</button>
+                                <%=orders[i].order_status%>
                             </td>
                         </tr>
+                        <% } %>
                 </tbody>
-                </form>
                 <% } %>
         </table>
 

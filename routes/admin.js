@@ -10,11 +10,10 @@ const Users = require('../model/users')
 route.get('/', checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) => {
     try {
         const products = await Product.find();
-        res.render("admin", { products: products })
+        res.status(201).render("admin", { products: products })
     } catch (error) {
-        res.send("You're facing error")
+        res.status(401).send("You're facing error")
     }
-
 })
 //to listing new product
 route.post('/', checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) => {
@@ -40,6 +39,8 @@ route.get('/status', checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) 
         // extracting and classifying all order status
         const pendingOrders = [];
         const confirmOrders = [];
+
+
         for (var i = 0; i < allOrders.length; i++) {
             if (allOrders[i].order_status === 'ordered') {
                 pendingOrders.push(allOrders[i]);
@@ -55,49 +56,44 @@ route.get('/status', checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) 
                 availableDrivers.push(allUsers[i]);
             }
         }
-        const busyDrivers = []
-        res.render("adminStatus.ejs", {
+        res.status(201).render("adminStatus.ejs", {
             pendingOrders: pendingOrders,
             confirmOrders: confirmOrders,
             availableDrivers: availableDrivers
         })
     } catch (error) {
-        res.send("you're facing error")
+        res.status(401).send("you're facing error")
     }
 
 })
 
-//assigning driver to orders
+//managing order as a admin
 route.post('/confirmOrder', checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) => {
-    try {
         const orderid = req.body.orderid
         const driverid = req.body.driverid
-
-        // const product = await Order.findById(Orderid);
+        const adminid = req.user._id.toString()
         const driver = await Users.findById(driverid);
         //update product status
         await Order.findByIdAndUpdate(orderid, {
             order_status: "dispatched",
             admin: req.user.name,
-            driver: driver.name
+            driver: driver.name,
+            adminid: adminid,
+            driverid: driverid
         })
-        //single product
-        // uadded to driver history
+        // added to driver history
         await Users.findByIdAndUpdate(driverid,
             { $push: { orders: [orderid] } }
         );
+        //updating driver status
         await Users.findByIdAndUpdate(driverid,
             { status: "not free" }
         );
         //added to admin history
-        await Users.findByIdAndUpdate(req.user.id,
-            { $push: { orders: orderid } },
+        await Users.findByIdAndUpdate(adminid,
+            { $push: { orders: [orderid] } }
         );
-
-        res.redirect('/admin/status')
-    } catch (error) {
-        res.send("you're facing error")
-    }
+        res.status(201).redirect('/admin/status')
 
 })
 //to delete listed products
@@ -116,25 +112,22 @@ route.get('/delete/:id', checkAuthenticated, authRole(ROLE.ADMIN), async (req, r
         res.status(500).json({ message: error.message })
     }
 })
+route.get('/history', checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) => {
+    try {
+        const history = req.user.orders
+        const temp = []
+        // console.log(history.length)
+        for (var i = 0; i < history.length; i++) {
+            const order = await Order.findById(history[i]);
+            if (order !== null) {
+                temp.push(order);
+            }
+        }
+        res.render('adminHistory', { orders: temp })
+    } catch (error) {
+        res.send("You're facing error")
+    }
+})
 
-
-
-
-//to update data
-// app.get('/admin/update/:id', checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) => {
-//     const id = req.params.id
-//     try {
-//         const product = await Product.findById(id);
-//         if (product == null) {
-//             res.status(404).send({ message: "Product is not present in the list" })
-//         }
-//         else {
-//             await Product.findByIdAndDelete(id)
-//             res.status(200).render('')
-//         }
-//     } catch (error) {
-//         res.status(500).json({ message: error.message })
-//     }
-// })
 
 module.exports = route

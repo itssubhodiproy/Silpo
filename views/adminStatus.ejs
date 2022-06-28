@@ -18,10 +18,15 @@
     <h1 class="text-center my-5"> Your Orders</h1>
     <div class="container my-3 text-right">
         <div class="btn-group" role="group" aria-label="Third group">
-            <a href="/admin"><button type="button" class="btn btn-outline-info mx-3">
+            <a href="/admin"><button type="button" class="btn btn-outline-info mx">
                     Product Page
                 </button>
             </a>
+        </div>
+        <div class="btn-group" role="group" aria-label="Third group">
+            <a href="/admin/history"><button type="button" class="btn btn-outline-success">
+                    Past Orders
+                </button></a>
         </div>
         <div class="btn-group" role="group" aria-label="Third group">
             <form action="/logout?_method=DELETE" method="POST"><button type="submit"
@@ -63,7 +68,7 @@
                                         <%=pendingOrders[i].product_name%>
                                     </td>
                                     <td>
-                                        <select name="driverid" class="btn btn-outline-primary btn-sm" id="lang">
+                                        <select name="driverid" id="lang">
                                             <%for(var j=0 ;j <availableDrivers.length ;j++){%>
                                                 <option value="<%=availableDrivers[j]._id%>">
                                                     <%=availableDrivers[j].name%>
@@ -98,27 +103,29 @@
 
                         </tr>
                     </thead>
-                    <tbody>
-                        <%for(var i=confirmOrders.length-1 ;i>=0 ;i--){%>
-                            <tr>
-                                <th scope="row">
-                                    <%= confirmOrders.length-i %>
-                                </th>
-                                <td>
-                                    <%=confirmOrders[i].customer_name%>
-                                </td>
-                                <td>
-                                    <%=confirmOrders[i].product_name%>
-                                </td>
-                                <td>
-                                    <%=confirmOrders[i].driver%>
-                                </td>
-                                <td>
-                                    <%=confirmOrders[i].order_status%>
-                                </td>
-                            </tr>
-                            <% } %>
-                    </tbody>
+                    <% if(confirmOrders!==null) {%>
+                        <tbody>
+                            <%for(var i=confirmOrders.length-1 ;i>=0 ;i--){%>
+                                <tr>
+                                    <th scope="row">
+                                        <%= i+1 %>
+                                    </th>
+                                    <td>
+                                        <%=confirmOrders[i].customer_name%>
+                                    </td>
+                                    <td>
+                                        <%=confirmOrders[i].product_name%>
+                                    </td>
+                                    <td>
+                                        <%=confirmOrders[i].driver%>
+                                    </td>
+                                    <td>
+                                        <%=confirmOrders[i].order_status%>
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </tbody>
+                        <% } %>
                 </table>
             </div>
         </div>

@@ -30,13 +30,21 @@ const orderSchema = new mongoose.Schema({
         type: String,
         default: "ordered"
     },
+    customerid: {
+        type: String,
+    },
     admin: {
+        type: String,
+    },
+    adminid: {
+        type: String,
+    },
+    driverid: {
         type: String,
     },
     driver: {
         type: String,
-    },
-
+    }
 }
 )
 module.exports = mongoose.model('orders', orderSchema)
