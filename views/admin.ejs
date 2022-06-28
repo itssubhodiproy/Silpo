@@ -16,17 +16,17 @@
 <body>
     <h1 class="text-center my-5"> Admin Page</h1>
     <div class="container my-5 text-right">
-            <div class="btn-group" role="group" aria-label="Third group">
-                <a href="/admin/status"><button type="button" class="btn btn-outline-success">
+        <div class="btn-group" role="group" aria-label="Third group">
+            <a href="/admin/status"><button type="button" class="btn btn-outline-success">
                     Manage Orders
                 </button></a>
-            </div>
-            <div class="btn-group" role="group" aria-label="Third group">
-                <a href="/admin/history"><button type="button" class="btn btn-outline-success">
+        </div>
+        <div class="btn-group" role="group" aria-label="Third group">
+            <a href="/admin/history"><button type="button" class="btn btn-outline-success">
                     Past Orders
                 </button></a>
-            </div>
-            
+        </div>
+
         <div class="btn-group" role="group" aria-label="Third group">
             <button type="button" class="btn btn-outline-primary mx" data-toggle="modal" data-target="#form">
                 Add product
@@ -64,9 +64,18 @@
                                 required>
                         </div>
                         <div class="form-group">
-                            <label for="product_type">Product type</label>
-                            <input type="text" name="product_type" class="form-control" id="product_type"
-                                placeholder="eg. Medicine" required>
+                            <label for="product_type" class="p-2">Product Type</label>
+                            <select name="product_type" id="product_type">
+                                <option value="food">
+                                    Food
+                                </option>
+                                <option value="beauty & lothing">
+                                    Beauty and clothing
+                                </option>
+                                <option value="goods">
+                                    Goods
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer border-top-0 d-flex justify-content-center">
