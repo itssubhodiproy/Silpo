@@ -17,11 +17,16 @@ npm install
 npm start
 ```
 ## Demo USER Account
-### Customer:
-#### Email
+### Customer Email:
 customer1@gmail.com, customer2@gmail.com
-#### Password
-123, 123
+### Admin Email
+admin1@gmail.com, admin2@gmail.com
+### Driver Email
+driver1@gmail.com, driver2@gmail.com
+### Password
+password is 123 for every acount as of now
+### Facing difficulity?
+create your own account by register/signup
 
 ## Project Structure and functionality
 
