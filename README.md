@@ -3,7 +3,7 @@
 
 ## Technology
 ### Client: 
-- Ejs View Engine, Bootstrap 5.1
+- EJS View Engine, Bootstrap 5.1
 ### Server: 
 - ExpressJs, Mongoose, MongoDB, Bcrypt, PassportJs
 
