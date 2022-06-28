@@ -3,9 +3,9 @@
 
 ## Technology
 ### Client: 
-Ejs view engine, Bootstrap 5.1
+- Ejs View Engine, Bootstrap 5.1
 ### Server: 
-ExpressJs, Mongoose, MongoDB, Bcrypt, PassportJs
+- ExpressJs, Mongoose, MongoDB, Bcrypt, PassportJs
 
 ## Run Locally
  To install external dependencies
