@@ -16,6 +16,12 @@ npm install
 ```bash
 npm start
 ```
+## Demo USER Account
+### Customer:
+#### Email
+customer1@gmail.com, customer2@gmail.com
+#### Password
+123, 123
 
 ## Project Structure and functionality
 
