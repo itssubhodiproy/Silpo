@@ -13,4 +13,4 @@ npm start
 
 ## Project Structure and functionality
 
-<img src="demo.png"/>
+<img src="demo.jpg"/>
