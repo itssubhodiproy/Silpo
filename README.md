@@ -1,4 +1,4 @@
-# Online-Shop
+# OrderLy
 - NodeJs should be installed in your system
 
 ## Technology
