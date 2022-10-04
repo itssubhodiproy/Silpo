@@ -28,6 +28,6 @@ npm start
 #### Facing difficulity?
 - create your own account by register/signup
 
-## Project design structure and a high level understanding of functionality
+## Project design structure and a high level understanding of functionalities
 
 <img src="demo.jpg"/>
