@@ -1,5 +1,5 @@
 # OrderLy
-- Node.js and MongoDB should be installed in your system.
+Node.js and MongoDB should be installed in your system.
 
 ## Technology
 ### Client: 
