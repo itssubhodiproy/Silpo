@@ -25,8 +25,8 @@ npm start
 - driver1@gmail.com, driver2@gmail.com
 #### Password
 - password is 123 for every acount as of now
-#### Facing difficulity with signup/signin?
-- create your own account by register/signup
+#### Facing difficulity with signin?
+- Signup your own account by visiting signup page
 
 ## Project design structure and a high level understanding of functionalities
 
