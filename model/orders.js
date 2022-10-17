@@ -35,6 +35,7 @@ const orderSchema = new mongoose.Schema({
     },
     admin: {
         type: String,
+        default: "not yet"
     },
     adminid: {
         type: String,
@@ -44,6 +45,7 @@ const orderSchema = new mongoose.Schema({
     },
     driver: {
         type: String,
+        default: "not yet"
     }
 }
 )

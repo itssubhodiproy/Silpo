@@ -68,13 +68,16 @@
                                         <%=pendingOrders[i].product_name%>
                                     </td>
                                     <td>
+                                        <% if(availableDrivers.length==0) {%> <p>No drivers available</p> <% } %>
+                                        <% if(availableDrivers.length!=0) {%>  
                                         <select name="driverid" id="lang">
-                                            <%for(var j=0 ;j <availableDrivers.length ;j++){%>
+                                            <%for(var j=0 ; j<availableDrivers.length ;j++){%>
                                                 <option value="<%=availableDrivers[j]._id%>">
                                                     <%=availableDrivers[j].name%>
                                                 </option>
                                                 <% } %>
                                         </select>
+                                        <% } %>
                                     </td>
                                     <input type="hidden" value="<%=pendingOrders[i]._id%>" name="orderid" />
                                     <td>
