@@ -13,9 +13,9 @@ route.get('/', checkAuthenticated, authRole(ROLE.DRIVER), async (req, res) => {
         const orderid = req.user.orders[orderlen - 1]
         if (orderid !== undefined && req.user.status === 'not free') {
             const curr_order = await Order.findById(orderid);
-            return res.render("driver.ejs", { orders: curr_order })
+            return res.render("driver/driver", { orders: curr_order })
         }
-        res.render("driver", { orders: {} })
+        res.render("driver/driver", { orders: {} })
     } catch (error) {
         res.send("You're facing error")
     }
@@ -54,7 +54,7 @@ route.get('/history', checkAuthenticated, authRole(ROLE.DRIVER), async (req, res
                 temp.push(order)
             }
         }
-        res.render('driverHistory', { orders: temp })
+        res.render('driver/driverHistory', { orders: temp })
     } catch (error) {
         res.send("You're facing error")
     }

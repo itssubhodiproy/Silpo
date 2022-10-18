@@ -15,7 +15,7 @@ route.get(
     try {
       const products = await Product.find();
       // console.log(req.user.cart)
-      res.render("customer.ejs", { products: products });
+      res.render("customer/customer.ejs", { products: products });
     } catch (error) {
       throw error;
       res.error(500).send("Server Error");
@@ -58,7 +58,7 @@ route.get(
   async (req, res) => {
     try {
       //rendering the cart
-      res.render("cart", { cart: req.user.cart });
+      res.render("customer/cart", { cart: req.user.cart });
       // res.json(cart);
     } catch (error) {
       res.send("you're facing error");
@@ -127,7 +127,7 @@ route.get(
     const id = req.user._id;
     try {
       const allOrders = await Order.find({ customer_id: id });
-      res.render("customerStatus.ejs", { orders: allOrders });
+      res.render("customer/customerStatus.ejs", { orders: allOrders });
     } catch (error) {
       res.send("you're facing error");
     }

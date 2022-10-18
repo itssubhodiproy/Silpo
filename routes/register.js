@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 
 
 route.get('/', checkNotAuthenticated, (req, res) => {
-    res.render('register.ejs')
+    res.render('auth/register.ejs')
 })
 
 route.post('/', checkNotAuthenticated, async (req, res) => {

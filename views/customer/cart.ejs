@@ -89,7 +89,12 @@
             <div class="border-t mt-8">
               <div class="flex font-semibold justify-between py-6 text-sm uppercase">
                 <span>Total cost</span>
-                <span>$600</span>
+                <span><% let sum = 0;
+                for(let i = 0;i<cart.length;i++){
+                  sum += cart[i].price;
+                }
+                %> <%= sum %> </span>
+                 
               </div>
               <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
             </div>

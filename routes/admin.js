@@ -10,7 +10,7 @@ const Users = require('../model/users')
 route.get('/', checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) => {
     try {
         const products = await Product.find();
-        res.status(201).render("admin", { products: products })
+        res.status(201).render("admin/admin", { products: products })
     } catch (error) {
         res.status(401).send("You're facing error")
     }
@@ -56,7 +56,7 @@ route.get('/status', checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) 
                 availableDrivers.push(allUsers[i]);
             }
         }
-        res.status(201).render("adminStatus.ejs", {
+        res.status(201).render("admin/adminStatus.ejs", {
             pendingOrders: pendingOrders,
             confirmOrders: confirmOrders,
             availableDrivers: availableDrivers
@@ -123,7 +123,7 @@ route.get('/history', checkAuthenticated, authRole(ROLE.ADMIN), async (req, res)
                 temp.push(order);
             }
         }
-        res.render('adminHistory', { orders: temp })
+        res.render('admin/adminHistory', { orders: temp })
     } catch (error) {
         res.send("You're facing error")
     }

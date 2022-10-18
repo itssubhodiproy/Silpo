@@ -8,7 +8,7 @@ const passport = require('passport')
 
 
 route.get('/', checkNotAuthenticated, (req, res) => {
-    res.render('login.ejs')
+    res.render('auth/login')
 })
 
 route.post('/', checkNotAuthenticated, passport.authenticate('local', {
