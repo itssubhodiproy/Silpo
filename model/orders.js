@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+// const Product = require('./products')
+// const Cart = require('./cart')
 
 //designing a product model
 const orderSchema = new mongoose.Schema({
@@ -18,11 +20,11 @@ const orderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    product_name: {
-        type: String,
+    allProducts: {
+        type: Array,
         required: true
     },
-    product_price: {
+    totalPrice: {
         type: String,
         required: true
     },
