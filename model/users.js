@@ -46,8 +46,21 @@ const UserSchema = new mongoose.Schema({
           type: String,
           required: true,
         },
+        coverImage: {
+          type: Buffer,
+        },
+        coverImageType: {
+          type: String,
+        },
       },
     ],
   },
 });
+
+UserSchema.virtual('coverImagePath').get(function() {
+  if (this.cart.coverImage != null && this.cart.coverImageType != null) {
+    return `data:${this.cart.coverImageType};charset=utf-8;base64,${this.cart.coverImage.toString('base64')}`
+  }
+})
+
 module.exports = mongoose.model("users", UserSchema);

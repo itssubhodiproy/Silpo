@@ -38,7 +38,7 @@
             <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
               <div class="flex w-2/5"> <!-- product -->
                 <div class="w-20">
-                  <img class="h-24" src="https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z" alt="">
+                  <img class="h-24" src="<%= productImgs[i] %> " alt="">
                 </div>
                 <div class="flex flex-col justify-between ml-4 flex-grow">
                   <span class="font-bold text-sm"><%= cart[i].title %> </span>
@@ -89,11 +89,7 @@
             <div class="border-t mt-8">
               <div class="flex font-semibold justify-between py-6 text-sm uppercase">
                 <span>Total cost</span>
-                <span><% let sum = 0;
-                for(let i = 0;i<cart.length;i++){
-                  sum += parseInt(cart[i].price,10);
-                }
-                %> <%= sum %> </span>
+                <span><%= totalPrice %> </span>
                  
               </div>
               <form action="/customer/cart" method="post">

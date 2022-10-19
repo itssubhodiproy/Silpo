@@ -1,144 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>admin</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- //filepond headers -->
+    <link
+      href="https://unpkg.com/filepond/dist/filepond.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"
+    ></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"
+    ></script>
+    <script defer src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script defer src="/javascripts/fileUpload.js"></script>
+  </head>
 
-<body>
-    <h1 class="text-center my-5"> Admin Page</h1>
+  <body>
+    <h1 class="text-center my-5">Admin Page</h1>
     <div class="container my-5 text-right">
-        <div class="btn-group" role="group" aria-label="Third group">
-            <a href="/admin/status"><button type="button" class="btn btn-outline-success">
-                    Manage Orders
-                </button></a>
-        </div>
-        <div class="btn-group" role="group" aria-label="Third group">
-            <a href="/admin/history"><button type="button" class="btn btn-outline-success">
-                    Past Orders
-                </button></a>
-        </div>
+      <div class="btn-group" role="group" aria-label="Third group">
+        <a href="/admin/status"
+          ><button type="button" class="btn btn-outline-success">
+            Manage Orders
+          </button></a
+        >
+      </div>
+      <div class="btn-group" role="group" aria-label="Third group">
+        <a href="/admin/history"
+          ><button type="button" class="btn btn-outline-success">
+            Past Orders
+          </button></a
+        >
+      </div>
 
-        <div class="btn-group" role="group" aria-label="Third group">
-            <button type="button" class="btn btn-outline-primary mx" data-toggle="modal" data-target="#form">
-                Add product
-            </button>
-        </div>
+      <div class="btn-group" role="group" aria-label="Third group">
+        <button
+          type="button"
+          class="btn btn-outline-primary mx"
+          data-toggle="modal"
+          data-target="#form"
+        >
+          Add product
+        </button>
+      </div>
 
-        <div class="btn-group" role="group" aria-label="Third group">
-            <form action="/logout?_method=DELETE" method="POST"><button type="submit"
-                    class="btn btn-secondary">Logout</button></form>
-        </div>
+      <div class="btn-group" role="group" aria-label="Third group">
+        <form action="/logout?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-secondary">Logout</button>
+        </form>
+      </div>
     </div>
 
-
-
-    <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="/admin" method="POST">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="title">Product Title</label>
-                            <input type="text" name="title" class="form-control" id="title" aria-describedby="emailHelp"
-                                placeholder="eg. Redbull" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Price (Rs.)</label>
-                            <input type="number" name="price" class="form-control" id="price" placeholder="eg. 30"
-                                required>
-                        </div>
-                        <div class="form-group">
-                            <label for="product_type" class="p-2">Product Type</label>
-                            <select name="product_type" id="product_type">
-                                <option value="food">
-                                    Food
-                                </option>
-                                <option value="beauty & clothing">
-                                    Beauty and clothing
-                                </option>
-                                <option value="goods">
-                                    Goods
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer border-top-0 d-flex justify-content-center">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
-                </form>
+    <div
+      class="modal fade"
+      id="form"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-bottom-0">
+            <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="/admin" method="POST">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="title">Product Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  class="form-control"
+                  id="title"
+                  aria-describedby="emailHelp"
+                  placeholder="eg. Redbull"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="price">Price (Rs.)</label>
+                <input
+                  type="number"
+                  name="price"
+                  class="form-control"
+                  id="price"
+                  placeholder="eg. 30"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="file_input"
+                  >Upload image (Max-size: 2mb/ jpg-png-jpeg)</label
+                >
+                <input
+                  type="file"
+                  name="cover"
+                  class="filepond form-control"
+                  id="file_input"
+                  accept="image/png, image/jpeg, image/jpg"
+                  data-max-file-size="4MB"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="product_type" class="p-2">Product Type</label>
+                <select name="product_type" id="product_type">
+                  <option value="food">Food</option>
+                  <option value="beauty & clothing">Beauty and clothing</option>
+                  <option value="goods">Goods</option>
+                </select>
+              </div>
             </div>
+            <div
+              class="modal-footer border-top-0 d-flex justify-content-center"
+            >
+              <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
     <div class="container">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Price(Rs.)</th>
-                    <!-- <th scope="col">To Update</th> -->
-                    <th scope="col">To Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <%for(var i=0;i < products.length;i++){%>
-                    <tr>
-                        <th scope="row">
-                            <%=i+1%>
-                        </th>
-                        <td>
-                            <%=products[i].title%>
-                        </td>
-                        <td>
-                            <%=products[i].product_type%>
-                        </td>
-                        <td>
-                            <%=products[i].price%>
-                        </td>
-                        <!-- <td>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Type</th>
+            <th scope="col">Price(Rs.)</th>
+            <!-- <th scope="col">To Update</th> -->
+            <th scope="col">To Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%for(var i=0;i < products.length;i++){%>
+          <tr>
+            <th scope="row"><%=i+1%></th>
+            <td><%=products[i].title%></td>
+            <td><%=products[i].product_type%></td>
+            <td><%=products[i].price%></td>
+            <!-- <td>
                             <a href="/admin/update/<%=products[i]._id%>"><button
                                     class="btn btn-info btn-sm">Update</button></a>
                         </td> -->
-                        <td>
-                            <a href="/admin/delete/<%=products[i]._id%>"><button
-                                    class="btn btn-danger btn-sm">Delete</button></a>
-                        </td>
-                    </tr>
-                    <% } %>
-            </tbody>
-        </table>
+            <td>
+              <a href="/admin/delete/<%=products[i]._id%>"
+                ><button class="btn btn-danger btn-sm">Delete</button></a
+              >
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
     </div>
 
-
-
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-
-</body>
-
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

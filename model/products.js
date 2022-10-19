@@ -14,16 +14,19 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  coverImage: {
+    type: Buffer,
+  },
+  coverImageType: {
+    type: String,
+  },
 });
 
-// const cartSchema = new mongoose.Schema({
-//   product_array: [productSchema],
-// });
+//for image post
+productSchema.virtual('coverImagePath').get(function() {
+  if (this.coverImage != null && this.coverImageType != null) {
+    return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
+  }
+})
 
 module.exports = mongoose.model("products", productSchema);
-// const cart = mongoose.model("cart", cartSchema);
-
-// module.exports = {
-//   Product: product,
-//   Cart: cart,
-// };
