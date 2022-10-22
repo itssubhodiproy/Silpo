@@ -1,10 +1,15 @@
 const express = require("express");
+require("dotenv").config();
 const route = express.Router();
 const { authRole, checkAuthenticated } = require("../roleAuth");
 const ROLE = require("../roles");
 const Product = require("../model/products");
 var Order = require("../model/orders");
 var Users = require("../model/users");
+const { initPayment, responsePayment } = require("../paytm/services/index");
+
+
+
 
 //giving customer all the listed product
 route.get(
@@ -14,40 +19,36 @@ route.get(
   async (req, res) => {
     try {
       const products = await Product.find();
-      // console.log(req.user.cart)
       res.render("customer/customer.ejs", { products: products });
     } catch (error) {
       throw error;
-      // res.error(500).send("Server Error");
     }
   }
 );
-// pushing the indiidual product into cart
+// pushing individual product id to cart
 route.get(
   "/product/:id",
   checkAuthenticated,
   authRole(ROLE.CUSTOMER),
   async (req, res) => {
     try {
-      // push the product to cart
       const product = await Product.findById(req.params.id);
       const Cart = JSON.parse(JSON.stringify(req.user.cart));
       // if product is already in cart, won't add it again
-      if (Cart.find((item) => item._id == product.id)) {
+      if (Cart.find((item) => item == product.id)) {
         return res.send("item already in cart");
       }
       // add product to cart
       else {
         await Users.findByIdAndUpdate(req.user.id, {
           $push: {
-            cart: [product],
+            cart: [req.params.id],
           },
         }).then(console.log("product added to cart"));
       }
       res.redirect("/customer");
     } catch (error) {
       throw error;
-      res.error(500).send("Server Error");
     }
   }
 );
@@ -57,86 +58,26 @@ route.get(
   authRole(ROLE.CUSTOMER),
   async (req, res) => {
     try {
-      let productImgs = [];
+      let products = [];
       let totalPrice = 0;
       const cartProducts = JSON.parse(JSON.stringify(req.user.cart));
+      // console.log(cartProducts);
       for (let i = 0; i < cartProducts.length; i++) {
-        const product = await Product.findById(cartProducts[i]._id);
-        productImgs.push(product.coverImagePath);
+        const product = await Product.findById(cartProducts[i]);
+        products.push(product);
         totalPrice += parseInt(product.price);
       }
       //rendering the cart
-      res.render("customer/cart", { cart: cartProducts, totalPrice: totalPrice, productImgs: productImgs });
+      res.render("customer/cart", {
+        totalPrice: totalPrice,
+        products: products,
+      });
       // res.json(cart);
     } catch (error) {
       throw error;
     }
   }
 );
-
-// redirecting to checkout page with dummy order object, if payment successful, order will be saved in database
-// else order will be not \be added and cart won't be cleared
-route.post(
-  "/cart",
-  checkAuthenticated,
-  authRole(ROLE.CUSTOMER),
-  async (req, res) => {
-    try {
-      // sum of all the products
-      var totalPrice = 0;
-      var cartProducts = req.user.cart;
-      // imgae of the product
-      let productImgs = [];
-      console.log(cartProducts.length);
-      // fetching all images with the help of id and passing them for SSR in checkout page
-      for (let i = 0; i < cartProducts.length; i++) {
-        const product = await Product.findById(cartProducts[i]._id);
-        productImgs.push(product.coverImagePath);
-        totalPrice += parseInt(product.price);
-      }
-      // cartProducts.forEach(async(element) => {
-      //   totalPrice += parseInt(element.price, 10);
-      //   let product = await Product.findById(element.id);
-      //   productImgs.push({product});
-      // });
-
-      console.log(totalPrice);
-      console.log(productImgs.length);
-      // dummy order object
-      var order = new Order({
-        customer_name: req.user.name,
-        // customer_address: "req.body.address",
-        // contact_number: "req.body.number",
-        order_time: Date.now(),
-        // allProducts: cartProducts,
-        totalPrice: totalPrice,
-        customer_id: req.user.id,
-        allProducts: cartProducts,
-      });
-      
-      res.render("customer/orderSummary", { order: order, productImgs: productImgs });
-      // //creating a new order
-      // await Order.create({
-      //   customer_name: req.user.name,
-      //   customer_address: "req.body.address",
-      //   contact_number: "req.body.number",
-      //   order_time: Date.now(),
-      //   // allProducts: cartProducts,
-      //   totalPrice: totalPrice,
-      //   customer_id: req.user.id,
-      //   allProducts: cartProducts,
-      // });
-      // await Users.findByIdAndUpdate(req.user.id, {
-      //   $set: { cart: [] },
-      // });
-      // res.redirect("/customer/status");
-    } catch (error) {
-      throw error;
-    }
-  }
-);
-
-
 //deleting the product from cart
 route.get(
   "/cart/:id",
@@ -153,6 +94,124 @@ route.get(
     }
   }
 );
+
+// redirecting to checkout page with dummy order object, if payment successful, order will be saved in database
+// else order will be not \be added and cart won't be cleared
+
+// route.post("/cart",checkAuthenticated,authRole(ROLE.CUSTOMER),async (req, res) => {
+//     try {
+//       // sum of all the products
+//       var totalPrice = 0;
+//       var cartProducts = req.user.cart;
+//       // imgae of the product
+//       let products = [];
+//       console.log(cartProducts.length);
+//       // fetching all images with the help of id and passing them for SSR in checkout page
+//       for (let i = 0; i < cartProducts.length; i++) {
+//         const product = await Product.findById(cartProducts[i]);
+//         products.push(product);
+//         totalPrice += parseInt(product.price);
+//       }
+
+//       console.log(totalPrice);
+//       console.log(products.length);
+//       // dummy order object
+//       var order = {
+//         customer_name: req.user.name,
+//         // customer_address: "req.body.address",
+//         // contact_number: "req.body.number",
+//         order_time: Date.now(),
+//         // allProducts: cartProducts,
+//         totalPrice: totalPrice,
+//         customer_id: req.user.id,
+//         allProducts: cartProducts,
+//       };
+//       // console.log(order);
+//       res.render("customer/orderSummary", {
+//         order: order,
+//         products: products,
+//       });
+//       res.send("worked");
+//       // //creating a new order
+//       // await Order.create({
+//       //   customer_name: req.user.name,
+//       //   customer_address: "req.body.address",
+//       //   contact_number: "req.body.number",
+//       //   order_time: Date.now(),
+//       //   // allProducts: cartProducts,
+//       //   totalPrice: totalPrice,
+//       //   customer_id: req.user.id,
+//       //   allProducts: cartProducts,
+//       // });
+//       // await Users.findByIdAndUpdate(req.user.id, {
+//       //   $set: { cart: [] },
+//       // });
+//       // res.redirect("/customer/status");
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// );
+// passing the cart products to the staging area
+route.get(
+  "/checkout",
+  checkAuthenticated,
+  authRole(ROLE.CUSTOMER),
+  async (req, res) => {
+    try {
+      let products = [];
+      let totalPrice = 0;
+      const cartProducts = JSON.parse(JSON.stringify(req.user.cart));
+      for (let i = 0; i < cartProducts.length; i++) {
+        const product = await Product.findById(cartProducts[i]);
+        products.push(product);
+        totalPrice += parseInt(product.price);
+      }
+      res.render("customer/checkout", {
+        products: products,
+        totalPrice: totalPrice,
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+let globalAdd = "";
+let globalNum = "";
+let globalProducts = [];
+let globalTotalPrice = 0;
+
+//creating a new order from taking assests from re.body
+route.post("/checkout",checkAuthenticated,authRole(ROLE.CUSTOMER),async (req, res) => {
+      //extract shipping address from req.body
+       globalAdd = req.body.address;
+       globalNum = req.body.phone;
+       //once for edgecase
+       globalProducts = [];
+      // sum of all the products
+      var totalPrice = 0;
+      var cartProducts = req.user.cart;
+      // fetching all images with the help of id and passing them for SSR in checkout page
+      for (let i = 0; i < cartProducts.length; i++) {
+        const product = await Product.findById(cartProducts[i]);
+        // globalProducts.push(product);
+        totalPrice += parseInt(product.price);
+      }
+      globalTotalPrice = totalPrice;
+      globalProducts = cartProducts;
+      customerId = req.user.id;
+      // redirect to paytm gateway
+      res.redirect(`/customer/paywithpaytm`);
+  }
+);
+
+
+
+
+
+
+
 
 //customer is placing order
 // route.post(

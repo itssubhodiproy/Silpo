@@ -26,7 +26,7 @@
           <div class="w-3/4 bg-white px-10 py-10">
             <div class="flex justify-between border-b pb-8">
               <h1 class="font-semibold text-2xl">Shopping Cart</h1>
-              <h2 class="font-semibold text-2xl"> <%= cart.length %> items </h2>
+              <h2 class="font-semibold text-2xl"> <%= products.length %> items </h2>
             </div>
             <div class="flex mt-10 mb-5">
               <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
@@ -34,16 +34,16 @@
               <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
               <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
             </div>
-            <% for(var i = 0;i< cart.length; i++) {%> 
+            <% for(var i = 0;i< products.length; i++) {%> 
             <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
               <div class="flex w-2/5"> <!-- product -->
                 <div class="w-20">
-                  <img class="h-24" src="<%= productImgs[i] %> " alt="">
+                  <img class="h-24" src="<%= products[i].coverImagePath %> " alt="">
                 </div>
                 <div class="flex flex-col justify-between ml-4 flex-grow">
-                  <span class="font-bold text-sm"><%= cart[i].title %> </span>
-                  <span class="text-red-500 text-xs"><%= cart[i].product_type %></span>
-                  <a href="/customer/cart/<%= cart[i].id %> " class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
+                  <span class="font-bold text-sm"><%= products[i].title %> </span>
+                  <span class="text-red-500 text-xs"><%= products[i].product_type %></span>
+                  <a href="/customer/cart/<%= products[i].id %> " class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
                 </div>
               </div>
               <div class="flex justify-center w-1/5">
@@ -56,8 +56,8 @@
                   <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
                 </svg>
               </div>
-              <span class="text-center w-1/5 font-semibold text-sm"><%= cart[i].price %></span>
-              <span class="text-center w-1/5 font-semibold text-sm"><%= cart[i].price %></span>
+              <span class="text-center w-1/5 font-semibold text-sm"><%= products[i].price %></span>
+              <span class="text-center w-1/5 font-semibold text-sm"><%= products[i].price %></span>
             </div>
     <% } %> 
 
@@ -72,7 +72,7 @@
           <div id="summary" class="w-1/4 px-8 py-10">
             <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
             <div class="flex justify-between mt-10 mb-5">
-              <span class="font-semibold text-sm uppercase"><%= cart.length %> </span>
+              <span class="font-semibold text-sm uppercase"><%= products.length %> </span>
               <span class="font-semibold text-sm">590$</span>
             </div>
             <div>
@@ -92,9 +92,9 @@
                 <span><%= totalPrice %> </span>
                  
               </div>
-              <form action="/customer/cart" method="post">
-              <button type="submit" class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
-            </form>
+              <!-- <form action="/customer/cart" method="post"> -->
+              <button type="submit" onclick="location.href='/customer/checkout'" class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+            <!-- </form> -->
             </div>
           </div>
     

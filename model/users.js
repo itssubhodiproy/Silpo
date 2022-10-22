@@ -32,35 +32,20 @@ const UserSchema = new mongoose.Schema({
     ],
   },
   cart: {
+    //array of products
     type: [
       {
-        title: {
-          type: String,
-          required: true,
-        },
-        price: {
-          type: String,
-          required: true,
-        },
-        product_type: {
-          type: String,
-          required: true,
-        },
-        coverImage: {
-          type: Buffer,
-        },
-        coverImageType: {
-          type: String,
-        },
+        type: String,
+        required: true,
       },
     ],
   },
 });
 
-UserSchema.virtual('coverImagePath').get(function() {
-  if (this.cart.coverImage != null && this.cart.coverImageType != null) {
-    return `data:${this.cart.coverImageType};charset=utf-8;base64,${this.cart.coverImage.toString('base64')}`
-  }
-})
+// UserSchema.virtual('coverImagePath').get(function() {
+//   if (this.cart.coverImage != null && this.cart.coverImageType != null) {
+//     return `data:${this.cart.coverImageType};charset=utf-8;base64,${this.cart.coverImage.toString('base64')}`
+//   }
+// })
 
 module.exports = mongoose.model("users", UserSchema);
