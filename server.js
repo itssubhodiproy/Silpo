@@ -13,14 +13,9 @@ const flash = require("express-flash");
 const session = require("express-session");
 const methodOverride = require("method-override");
 const initializePassport = require("./passport-config");
-//paytm
-const cors = require("cors");
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-const { initPayment, responsePayment } = require("./paytm/services/index");
+
 //auth each role
-// const { checkAuthenticated, checkNotAuthenticated } = require("./roleAuth");
+const { checkAuthenticated, checkNotAuthenticated } = require("./roleAuth");
 //MongoDB connection
 mongoose.connect(
   MONGO_URI,
@@ -48,10 +43,10 @@ app.use(
     saveUninitialized: false,
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride("_method"));
-app.use(cors());
 //set individual routes for individual endpoint
 const registerRoute = require("./routes/register");
 app.use("/register", registerRoute);
@@ -67,51 +62,17 @@ app.use("/customer", customerRoute);
 
 const driverRoute = require("./routes/driver");
 app.use("/driver", driverRoute);
+
 //for logout
-app.delete("/logout", function (req, res, next) {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
-});
-// //redirect-routes
-// app.get("/", checkAuthenticated, (req, res) => {
-//   const role = req.user.role;
-//   res.redirect(`/${role}`);
-// });
+const logoutRoute = require("./routes/logout");
+app.use("/logout", logoutRoute);
 
-app.get("/paywithpaytm", (req, res) => {
-  initPayment(10).then(
-    (success) => {
-      console.log(process.env.PAYTM_FINAL_URL);
-      res.render("paytm/paytmRedirect", {
-        resultData: success,
-        paytmFinalUrl: process.env.PAYTM_FINAL_URL,
-      });
-    },
-    (error) => {
-      res.send(error);
-    }
-  );
+//redirect-routes
+app.get("/", checkAuthenticated, (req, res) => {
+  const role = req.user.role;
+  res.redirect(`/${role}`);
 });
 
-app.post("/paywithpaytmresponse", async (req, res) => {
-  if (responsePayment(req.body)) {
-    // res.render("response.ejs", {resultData: "true", responseData: success});
-    // let data = await fetch("https://api.github.com/users",{method: "GET"});
-    // let json = await data.json();
-      return res.send("Success");
-  }
-  res.send("error");
-});
-
-// //redirect-routes
-// app.get("/", checkAuthenticated, (req, res) => {
-//   const role = req.user.role;
-//   res.redirect(`/${role}`);
-// });
 
 
 

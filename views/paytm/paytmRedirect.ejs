@@ -11,11 +11,11 @@
         <% for (name in resultData) {
         %>
         <input type="hidden" name='<%= name %>' value='<%= resultData[name] %>'>
+
         <%
         }
         %>
         </tbody>
-        <input type="hidden" name="cartProducts" value='<%= cartProducts %>'>
     </table>
     <script type="text/javascript">
       document.f1.submit();

@@ -1,16 +1,10 @@
 const express = require("express");
-require("dotenv").config();
 const route = express.Router();
 const { authRole, checkAuthenticated } = require("../roleAuth");
 const ROLE = require("../roles");
 const Product = require("../model/products");
 var Order = require("../model/orders");
 var Users = require("../model/users");
-const { initPayment, responsePayment } = require("../paytm/services/index");
-
-
-
-
 //giving customer all the listed product
 route.get(
   "/",
@@ -33,7 +27,7 @@ route.get(
   async (req, res) => {
     try {
       const product = await Product.findById(req.params.id);
-      const Cart = JSON.parse(JSON.stringify(req.user.cart));
+      const Cart = JSON.parse(JSON.stringify(req.user.cart))
       // if product is already in cart, won't add it again
       if (Cart.find((item) => item == product.id)) {
         return res.send("item already in cart");
@@ -177,41 +171,46 @@ route.get(
   }
 );
 
-let globalAdd = "";
-let globalNum = "";
-let globalProducts = [];
-let globalTotalPrice = 0;
-
 //creating a new order from taking assests from re.body
-route.post("/checkout",checkAuthenticated,authRole(ROLE.CUSTOMER),async (req, res) => {
-      //extract shipping address from req.body
-       globalAdd = req.body.address;
-       globalNum = req.body.phone;
-       //once for edgecase
-       globalProducts = [];
-      // sum of all the products
-      var totalPrice = 0;
-      var cartProducts = req.user.cart;
-      // fetching all images with the help of id and passing them for SSR in checkout page
-      for (let i = 0; i < cartProducts.length; i++) {
-        const product = await Product.findById(cartProducts[i]);
-        // globalProducts.push(product);
-        totalPrice += parseInt(product.price);
-      }
-      globalTotalPrice = totalPrice;
-      globalProducts = cartProducts;
-      customerId = req.user.id;
-      // redirect to paytm gateway
-      res.redirect(`/customer/paywithpaytm`);
+route.post(
+  "/checkout",
+  checkAuthenticated,
+  authRole(ROLE.CUSTOMER),
+  async (req, res) => {
+    // sum of all the products
+    var totalPrice = 0;
+    var cartProducts = req.user.cart;
+
+    for (let i = 0; i < cartProducts.length; i++) {
+      const product = await Product.findById(cartProducts[i]);
+      totalPrice += parseInt(product.price);
+    }
+
+    //order create
+    try {
+      await Order.create({
+        customer_name: req.user.name,
+        customer_address: req.body.address,
+        contact_number: req.body.phone,
+        order_time: Date.now(),
+        allProducts: cartProducts,
+        totalPrice: totalPrice,
+        customerid: req.user.id,
+      }).then(console.log("order created"));
+      await Users.findByIdAndUpdate(req.user.id, {
+        $set: { cart: [] },
+      }).then(console.log("cart cleared"));
+    } catch (error) {
+      console.log(error);
+      res.send("error");
+    }
+
+    // fetching all images with the help of id and passing them for SSR in checkout page
+
+    // redirect to paytm gateway
+    res.redirect(`/customer/status`);
   }
 );
-
-
-
-
-
-
-
 
 //customer is placing order
 // route.post(
@@ -253,12 +252,23 @@ route.get(
     const id = req.user._id;
     try {
       const allOrders = await Order.find({ customer_id: id });
-      // res.render("customer/customerStatus.ejs", { orders: allOrders });
-      res.json(allOrders);
+      res.render("customer/customerStatus.ejs", { orders: allOrders });
+      // res.json(allOrders);
     } catch (error) {
       res.send("you're facing error");
     }
   }
 );
+
+//getting single order details
+route.get("/order/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const order = await Order.findById(id);
+    res.json(order);
+  } catch (error) {
+    res.send("you're facing error");
+  }
+});
 
 module.exports = route;
