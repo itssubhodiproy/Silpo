@@ -13,9 +13,15 @@
       rel="stylesheet"
       href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
   </head>
   <!-- navbar -->
-  <nav class="bg-gray-100 border-gray-200 px-2 sm:px-4 pb-4 rounded dark:bg-gray-900 mx-auto container">
+  <!--  -->
+  <body
+    class="flex flex-col w-screen min-h-screen p-10 bg-gray-100 text-gray-800 pt-3"
+  >
+  <nav class="bg-gray-100 border-gray-200 px-2 sm:px-4 pb-4 rounded dark:bg-gray-900 mx-auto container mb-3">
     <div class="container flex flex-wrap justify-between items-center mx-auto">
       <a href="#" class="flex items-center">
         <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
@@ -48,9 +54,11 @@
                 class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
             </li>
             <li>
-              <a onclick="location.href='/logout'"
-                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
-                out</a>
+              <a
+                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"><form action="/logout?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-secondary">Logout</button>
+                </form>
+              </a>
             </li>
           </ul>
         </div>
@@ -94,131 +102,62 @@
       </div>
     </div>
   </nav>
-  <body
-    class="flex flex-col w-screen min-h-screen p-10 bg-gray-100 text-gray-800"
-  >
     <!-- Component Start -->
-    <!-- <h1 class="text-3xl">Products</h1> -->
-    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mt-6">
-      <span class="text-sm font-semibold">1-16 of 148 Products</span>
-      <button class="relative text-sm focus:outline-none group mt-4 sm:mt-0">
-        <div
-          class="flex items-center justify-between w-40 h-10 px-3 border-2 border-gray-300 rounded hover:bg-gray-300"
-        >
-          <span class="font-medium"> Popular </span>
-          <svg
-            class="w-4 h-4"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </div>
-        <div
-          class="absolute z-10 flex-col items-start hidden w-full pb-1 bg-white shadow-lg rounded group-focus:flex"
-        >
-          <a class="w-full px-4 py-2 text-left hover:bg-gray-200" href="#"
-            >Popular</a
-          >
-          <a class="w-full px-4 py-2 text-left hover:bg-gray-200" href="#"
-            >Featured</a
-          >
-          <a class="w-full px-4 py-2 text-left hover:bg-gray-200" href="#"
-            >Newest</a
-          >
-          <a class="w-full px-4 py-2 text-left hover:bg-gray-200" href="#"
-            >Lowest Price</a
-          >
-          <a class="w-full px-4 py-2 text-left hover:bg-gray-200" href="#"
-            >Highest Price</a
-          >
-        </div>
-      </button>
-    </div>
+    <!-- Component Start -->
+	<h1 class="text-3xl">All Products</h1>
+	<div class="flex flex-row sm:flex-row sm:items-end sm:justify-between mt-6 justify-between items-center">
+		<span class="text-sm font-semibold">1-16 of 148 Products</span>
+    <div class="flex justify-between items-center">
+		<button class="relative text-sm focus:outline-none group mt-4 sm:mt-0 mx-2" onclick="location.href='/customer/cart'">
+			<div class="flex items-center justify-between w-20 h-10 px-3 border-2 border-gray-300 rounded hover:bg-gray-300">
+				<i class="fa-solid fa-cart-shopping"></i>
+        <span class="font-medium">
+					Cart
+				</span>
+			</div>
+		</button>
+    <% if(role=='admin') {%> 
+    <button class="relative text-sm focus:outline-none group mt-4 sm:mt-0 mx-2" onclick="location.href='/customer/cart'">
+			<div class="flex items-center justify-between w-20 h-10 px-3 border-2 border-gray-300 rounded hover:bg-gray-300">
+				<i class="fa-solid fa-cart-shopping"></i>
+        <span class="font-medium">
+					Add
+				</span>
+			</div>
+		</button>
+    <% } %>
+  </div>
+	</div>
     <div
       class="grid 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-x-6 gap-y-12 w-full mt-6"
     >
+    <% for(let i=0;i<products.length;i++) {%> 
       <!-- Product Tile Start -->
       <div>
-        <a href="#"> <img src="https://images.ctfassets.net/lcr8qbvxj7mh/6As80aGODXvOHKsjOlExAY/6fc5faf64f3b7d85781baf1aff29dcb8/IN_RBED_250_Single_Unit_close_cold_ORIGINAL_DRES__1_.png" class="block h-64 rounded-lg shadow-lg bg-cover ml-auto mr-auto"> </img> </a>
+        <a href="#"> <img src="<%= products[i].coverImagePath %> " class="block h-64 rounded-lg shadow-lg bg-cover ml-auto mr-auto"> </img> </a>
         <div class="flex items-center justify-between mt-3">
           <div>
-            <a href="#" class="font-medium">Product Name</a>
+            <a href="#" class="font-medium"><%= products[i].title %> </a>
             <a class="flex items-center" href="#">
               <span class="text-xs font-medium text-gray-600">by</span>
               <span class="text-xs font-medium ml-1 text-indigo-500"
-                >Store Name</span
+                ><%= products[i].product_type%></span
               >
             </a>
           </div>
           <div class="flex justify-between">
           <span
             class="flex items-center h-8 bg-indigo-200 text-indigo-600 text-sm px-2 rounded mx-2"
-            >$34</span
+            >$<%= products[i].price%></span
           >
-          <button
+          <button onclick="location.href='/customer/product/<%=products[i].id %>'"
             class="flex items-center h-8 bg-indigo-200 text-indigo-600 text-sm px-2 rounded"
             >Add To Cart</button
           >
         </div>
       </div>
       </div>
-      <!-- Product Tile Start -->
-      <div>
-        <a href="#"> <img src="https://images.ctfassets.net/lcr8qbvxj7mh/6As80aGODXvOHKsjOlExAY/6fc5faf64f3b7d85781baf1aff29dcb8/IN_RBED_250_Single_Unit_close_cold_ORIGINAL_DRES__1_.png" class="block h-64 rounded-lg shadow-lg bg-cover ml-auto mr-auto"> </img> </a>
-        <div class="flex items-center justify-between mt-3">
-          <div>
-            <a href="#" class="font-medium">Product Name</a>
-            <a class="flex items-center" href="#">
-              <span class="text-xs font-medium text-gray-600">by</span>
-              <span class="text-xs font-medium ml-1 text-indigo-500"
-                >Store Name</span
-              >
-            </a>
-          </div>
-          <div class="flex justify-between">
-          <span
-            class="flex items-center h-8 bg-indigo-200 text-indigo-600 text-sm px-2 rounded mx-2"
-            >$34</span
-          >
-          <button
-            class="flex items-center h-8 bg-indigo-200 text-indigo-600 text-sm px-2 rounded"
-            >Add To Cart</button
-          >
-        </div>
-      </div>
-      </div>
-      <!-- Product Tile Start -->
-      <div>
-        <a href="#"> <img src="https://images.ctfassets.net/lcr8qbvxj7mh/6As80aGODXvOHKsjOlExAY/6fc5faf64f3b7d85781baf1aff29dcb8/IN_RBED_250_Single_Unit_close_cold_ORIGINAL_DRES__1_.png" class="block h-64 rounded-lg shadow-lg bg-cover ml-auto mr-auto"> </img> </a>
-        <div class="flex items-center justify-between mt-3">
-          <div>
-            <a href="#" class="font-medium">Product Name</a>
-            <a class="flex items-center" href="#">
-              <span class="text-xs font-medium text-gray-600">by</span>
-              <span class="text-xs font-medium ml-1 text-indigo-500"
-                >Store Name</span
-              >
-            </a>
-          </div>
-          <div class="flex justify-between">
-          <span
-            class="flex items-center h-8 bg-indigo-200 text-indigo-600 text-sm px-2 rounded mx-2"
-            >$34</span
-          >
-          <button
-            class="flex items-center h-8 bg-indigo-200 text-indigo-600 text-sm px-2 rounded"
-            >Add To Cart</button
-          >
-        </div>
-      </div>
-      </div>
-      
+      <% } %> 
       
     </div>
     <div class="flex justify-center mt-10 space-x-1">
@@ -283,5 +222,6 @@
       </button>
     </div>
     <!-- Component End  -->
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
   </body>
 </html>

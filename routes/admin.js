@@ -12,7 +12,7 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'images/jpg']
 route.get("/", checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) => {
   try {
     const products = await Product.find();
-    res.status(201).render("admin/admin", { products: products });
+    res.status(201).render("customer/tempCustomer", { products: products , role: req.user.role});
   } catch (error) {
     res.status(401).send("You're facing error");
   }

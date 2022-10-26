@@ -5,6 +5,7 @@ const ROLE = require("../roles");
 const Product = require("../model/products");
 var Order = require("../model/orders");
 var Users = require("../model/users");
+
 //giving customer all the listed product
 route.get(
   "/",
@@ -13,7 +14,7 @@ route.get(
   async (req, res) => {
     try {
       const products = await Product.find();
-      res.render("customer/tempCustomer.ejs", { products: products });
+      res.render("customer/tempCustomer.ejs", { products: products, role: req.user.role });
     } catch (error) {
       throw error;
     }

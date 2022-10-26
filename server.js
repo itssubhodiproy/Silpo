@@ -63,12 +63,14 @@ app.use("/driver", driverRoute);
 //for logout
 const logoutRoute = require("./routes/logout");
 app.use("/logout", logoutRoute);
+//for logout
 
 //redirect-routes
 app.get("/", checkAuthenticated, (req, res) => {
   const role = req.user.role;
   res.redirect(`/${role}`);
 });
+
 
 //listening server
 app.listen(PORT, () => console.log(`server is listening on port ${PORT}`));
