@@ -5,15 +5,12 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI;
-const bodyParser = require("body-parser");
-
 //login libraries
 const passport = require("passport");
 const flash = require("express-flash");
 const session = require("express-session");
 const methodOverride = require("method-override");
 const initializePassport = require("./passport-config");
-
 //auth each role
 const { checkAuthenticated, checkNotAuthenticated } = require("./roleAuth");
 //MongoDB connection
@@ -72,10 +69,6 @@ app.get("/", checkAuthenticated, (req, res) => {
   const role = req.user.role;
   res.redirect(`/${role}`);
 });
-
-
-
-
 
 //listening server
 app.listen(PORT, () => console.log(`server is listening on port ${PORT}`));

@@ -1,8 +1,5 @@
 const mongoose = require('mongoose')
-// const Product = require('./products')
-// const Cart = require('./cart')
 
-//designing a product model
 const orderSchema = new mongoose.Schema({
     customer_name: {
         type: String,
