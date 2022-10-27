@@ -12,7 +12,7 @@ route.get('/', checkNotAuthenticated, (req, res) => {
 })
 
 route.post('/', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: `/`,
+    successRedirect: `/role`,
     failureRedirect: '/login',
     failureFlash: true
 }))

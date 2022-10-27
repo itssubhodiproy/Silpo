@@ -63,10 +63,12 @@ app.use("/driver", driverRoute);
 //for logout
 const logoutRoute = require("./routes/logout");
 app.use("/logout", logoutRoute);
-//for logout
-
+//landing page
+app.get("/",checkNotAuthenticated, (req, res) => {
+  res.render("landingPage.ejs");
+});
 //redirect-routes
-app.get("/", checkAuthenticated, (req, res) => {
+app.get("/role", checkAuthenticated, (req, res) => {
   const role = req.user.role;
   res.redirect(`/${role}`);
 });
