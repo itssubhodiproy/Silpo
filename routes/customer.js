@@ -14,7 +14,10 @@ route.get(
   async (req, res) => {
     try {
       const products = await Product.find();
-      res.render("customer/tempCustomer.ejs", { products: products, role: req.user.role });
+      res.render("customer/tempCustomer.ejs", {
+        products: products,
+        user: req.user,
+      });
     } catch (error) {
       throw error;
     }
@@ -28,7 +31,7 @@ route.get(
   async (req, res) => {
     try {
       const product = await Product.findById(req.params.id);
-      const Cart = JSON.parse(JSON.stringify(req.user.cart))
+      const Cart = JSON.parse(JSON.stringify(req.user.cart));
       // if product is already in cart, won't add it again
       if (Cart.find((item) => item == product.id)) {
         return res.send("item already in cart");
@@ -69,7 +72,8 @@ route.get(
       });
       // res.json(cart);
     } catch (error) {
-      throw error;
+      console.log(error);
+      res.send(error);
     }
   }
 );
@@ -81,10 +85,11 @@ route.get(
   async (req, res) => {
     try {
       await Users.findByIdAndUpdate(req.user.id, {
-        $pull: { cart: { _id: req.params.id } },
+        $pull: { cart: req.params.id },
       });
       res.redirect("/customer/cart");
     } catch (error) {
+      console.log(error);
       res.send("you're facing error");
     }
   }

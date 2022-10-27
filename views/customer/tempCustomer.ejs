@@ -42,10 +42,10 @@
           style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(0px, 443.636px, 0px);">
           <div class="py-3 px-4">
             <span class="block text-sm text-gray-900 dark:text-white">
-              
+              <%= user.name %> 
             </span>
             <span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">
-              
+              <%= user.username %> 
             </span>
           </div>
           <ul class="py-1" aria-labelledby="user-menu-button">
@@ -105,9 +105,10 @@
     <!-- Component Start -->
     <!-- Component Start -->
 	<h1 class="text-3xl">All Products</h1>
-	<div class="flex flex-row sm:flex-row sm:items-end sm:justify-between mt-6 justify-between items-center">
+	<div class="flex justify-between mt-6 items-center">
 		<span class="text-sm font-semibold">1-16 of 148 Products</span>
     <div class="flex justify-between items-center">
+      <% if(user.role=='customer') {%> 
 		<button class="relative text-sm focus:outline-none group mt-4 sm:mt-0 mx-2" onclick="location.href='/customer/cart'">
 			<div class="flex items-center justify-between w-20 h-10 px-3 border-2 border-gray-300 rounded hover:bg-gray-300">
 				<i class="fa-solid fa-cart-shopping"></i>
@@ -116,8 +117,9 @@
 				</span>
 			</div>
 		</button>
-    <% if(role=='admin') {%> 
-    <button class="relative text-sm focus:outline-none group mt-4 sm:mt-0 mx-2" onclick="location.href='/customer/cart'">
+    <% } %>
+    <% if(user.role=='admin') {%> 
+    <button class="relative text-sm focus:outline-none group mt-4 sm:mt-0 mx-2" onclick="location.href='/admin/'">
 			<div class="flex items-center justify-between w-20 h-10 px-3 border-2 border-gray-300 rounded hover:bg-gray-300">
 				<i class="fa-solid fa-cart-shopping"></i>
         <span class="font-medium">
