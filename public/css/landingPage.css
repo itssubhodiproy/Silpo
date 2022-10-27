@@ -8,7 +8,7 @@
 .banner {
     width: 100%;
     height: 150vh;
-    background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0, 0, 0, 0.75)),url(https://wallpaperaccess.com/full/123346.jpg);
+    background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0, 0, 0, 0.75)),url(https://thumbs.dreamstime.com/b/x-ektara-one-string-musical-instrument-ektara-one-string-musical-instrument-which-widely-used-traditional-music-138216669.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -81,7 +81,7 @@ button {
     margin: 20px 10px;
     /* border-radius: 25px; */
     font-weight: bold;
-    border: 2px solid #8886ff;
+    border: 2px solid #db8048;
     background: transparent;
     color: #fff;
     cursor: pointer;
@@ -90,7 +90,7 @@ button {
 }
 
 span {
-    background:#8886ff;
+    background:#db8048;
     height: 100%;
     width: 0%;
     /* border-radius: 25px; */
