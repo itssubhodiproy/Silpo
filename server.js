@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 //dotenv
 require("dotenv").config();
 const PORT = process.env.PORT;
@@ -25,11 +26,12 @@ mongoose.connect(
 
 //initializing passport
 initializePassport(passport);
-
+// it folking matters for uploading files
+app.use(bodyParser.urlencoded({ limit: '4mb', extended: false }))
 //middlewares
 app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/public"));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/public'));
+app.use(express.urlencoded({ extended: false }))
 
 //login middlewares
 app.use(flash());
@@ -44,6 +46,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverride("_method"));
+
+
+
 //set individual routes for individual endpoint
 const registerRoute = require("./routes/register");
 app.use("/register", registerRoute);

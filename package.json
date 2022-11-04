@@ -21,7 +21,8 @@
     "mongoose": "^6.4.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "body-parser": "^1.20.0"
   },
   "devDependencies": {
     "dotenv": "^16.0.1",

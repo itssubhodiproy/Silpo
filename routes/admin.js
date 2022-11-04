@@ -12,7 +12,7 @@ const imageMimeTypes = ['image/jpeg', 'image/png', 'images/jpg']
 route.get("/", checkAuthenticated, authRole(ROLE.ADMIN), async (req, res) => {
   try {
     const products = await Product.find();
-    res.status(201).render("customer/tempCustomer", { products: products , role: req.user.role});
+    res.status(201).render("admin/tempAdmin", { products: products , user: req.user});
   } catch (error) {
     res.status(401).send("You're facing error");
   }
@@ -58,10 +58,11 @@ route.get(
           availableDrivers.push(allUsers[i]);
         }
       }
-      res.status(201).render("admin/adminStatus.ejs", {
+      res.status(201).render("admin/tempManage.ejs", {
         pendingOrders: pendingOrders,
         confirmOrders: confirmOrders,
         availableDrivers: availableDrivers,
+        user: req.user
       });
     } catch (error) {
       res.status(401).send("you're facing error");

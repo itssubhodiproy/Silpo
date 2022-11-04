@@ -23,6 +23,22 @@ route.get(
     }
   }
 );
+
+// pushing individual product id to cart
+// route.get(
+//   "/product/:id",
+//   checkAuthenticated,
+//   authRole(ROLE.CUSTOMER),
+//   async (req, res) => {
+//     try {
+//       const product = await Product.findById(req.params.id);
+//       res.render("customer/productPage.ejs", { product: product ,user: req.user});
+//     } catch (error) {
+//       console.log(error);
+//       res.send(error);
+//     }
+//   }
+// );
 // pushing individual product id to cart
 route.get(
   "/product/:id",
@@ -44,7 +60,7 @@ route.get(
           },
         }).then(console.log("product added to cart"));
       }
-      res.redirect("/customer");
+      res.redirect("/customer/cart");
     } catch (error) {
       throw error;
     }
@@ -69,6 +85,7 @@ route.get(
       res.render("customer/cart", {
         totalPrice: totalPrice,
         products: products,
+        user: req.user,
       });
       // res.json(cart);
     } catch (error) {
@@ -170,7 +187,10 @@ route.get(
     const id = req.user._id;
     try {
       const allOrders = await Order.find({ customer_id: id });
-      res.render("customer/customerStatus.ejs", { orders: allOrders });
+      res.render("customer/tempOrderStatus.ejs", {
+        orders: allOrders,
+        user: req.user,
+      });
       // res.json(allOrders);
     } catch (error) {
       res.send("you're facing error");
@@ -183,7 +203,12 @@ route.get("/order/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const order = await Order.findById(id);
-    res.json(order);
+    let products = [];
+    for (let i = 0; i < order.allProducts.length; i++) {
+      const product = await Product.findById(order.allProducts[i]);
+      products.push(product);
+    }
+    res.render("customer/orderDetails.ejs", { order: order, user: req.user, products: products });
   } catch (error) {
     res.send("you're facing error");
   }

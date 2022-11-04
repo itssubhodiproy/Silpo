@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+    href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <link
+      rel="stylesheet"
+      href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css"
+    />
+
+</head>
+
+<body class="bg-gray-100">
+    <div>
+   <%- include('navBar') %> 
+<div class="flex-col mx-10"> 
+<h1 class="text-center text-5xl mb-10">Your Orders</h1>
+<div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="py-3 px-6">
+                    View Order
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Toatal Price
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Date 
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Admin
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Driver
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Order Status
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = orders.length-1; i > 0; i--) { %>
+            <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <td class="py-4 px-6">
+                    <a href="/customer/order/<%= orders[i].id %> " class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View Order</a>
+                </td>
+                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <%= orders[i].totalPrice %> 
+                </th>
+                <td class="py-4 px-6">
+                    <%= orders[i].order_time.toLocaleDateString() %> 
+                </td>
+                <td class="py-4 px-6">
+                    <%= orders[i].admin %> 
+                </td>
+                <td class="py-4 px-6">
+                    <%= orders[i].driver %> 
+                </td>
+                <td class="py-4 px-6">
+                    <%= orders[i].order_status %>  
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+<script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+
+</body>
+
+</html>
