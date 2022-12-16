@@ -44,7 +44,7 @@ route.get(
       const pendingOrders = [];
       const confirmOrders = [];
 
-      for (var i = 0; i < allOrders.length; i++) {
+      for (let i = 0; i < allOrders.length; i++) {
         if (allOrders[i].order_status === "ordered") {
           pendingOrders.push(allOrders[i]);
         } else {
@@ -53,11 +53,13 @@ route.get(
       }
       //extracting available drivers
       const availableDrivers = [];
-      for (var i = 0; i < allUsers.length; i++) {
+      for (let i = 0; i < allUsers.length; i++) {
         if (allUsers[i].role === "driver" && allUsers[i].status === "free") {
           availableDrivers.push(allUsers[i]);
         }
       }
+      // console.log(pendingOrders);
+      console.log(confirmOrders);
       res.status(201).render("admin/tempManage.ejs", {
         pendingOrders: pendingOrders,
         confirmOrders: confirmOrders,
