@@ -1,6 +1,6 @@
-# MERN E-Commerce Platform
+# Silpo: Experience the beauty of Santiniketan
 
-This is an e-commerce platform built using the MERN stack (MongoDB, Express, React, and Node.js). It includes a customer panel, an admin panel, and a driver panel.
+Silpo is an e-commerce platform for buying arts in Bolpur, Santiniketan. It is built using the MERN stack (MongoDB, Express, React, and Node.js) and includes a customer panel, an admin panel, and a driver panel.
 
 ## Features
 
@@ -20,6 +20,13 @@ This is an e-commerce platform built using the MERN stack (MongoDB, Express, Rea
   - Track delivery status and update it as needed
   - Plan efficient routes for drivers
   - Communicate with customers about delivery status and any issues that arise
+
+## Tech Stack
+
+- Node.js
+- express.js
+- mongo.db
+- react.js
 
 ## Prerequisites
 
