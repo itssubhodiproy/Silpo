@@ -1,4 +1,26 @@
-# Silpo: Experience the beauty of Santiniketan
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com//subh-cs/Silpo">
+    <img src="/assets/BlareLogo.png" alt="Logo" width="200">
+  </a>
+
+<h3 align="center">Silpo</h3>
+
+  <p align="center">
+    Experience the beauty of Santiniketan
+    <br />
+    <a href="https://github.com/subh-cs/Silpo"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://subh-shop.herokuapp.com">View Demo</a>
+    ·
+    <a href="https://github.com/subh-cs/Silpo/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/subh-cs/Silpo/issues">Request Feature</a>
+  </p>
+</div>
+
 
 Silpo is an e-commerce platform for buying arts in Bolpur, Santiniketan. It is built using the MERN stack (MongoDB, Express, React, and Node.js) and includes a customer panel, an admin panel, and a driver panel.
 
