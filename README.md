@@ -2,7 +2,7 @@
 <br />
 <div align="center">
   <a href="https://github.com//subh-cs/Silpo">
-    <img src="/assets/BlareLogo.png" alt="Logo" width="200">
+    <img src="/assets/SilpoLogo.png" alt="Logo" width="200">
   </a>
 
 <h3 align="center">Silpo</h3>
